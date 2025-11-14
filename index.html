@@ -3,9 +3,681 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Website</title>
+    <title>Princesa - Cocina Cultura | Historic Puerto Rican Cuisine</title>
+    <meta name="description" content="Experience 19th-century Puerto Rican cuisine in a magical garden setting in Old San Juan. Discover our extensive rum collection and farm-to-table dishes.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;600&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lora', serif;
+            overflow-x: hidden;
+            position: relative;
+            background: #F7F5F2;
+            color: #1a2a24;
+        }
+
+        /* Animated Garden Background */
+        .garden-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #F7F5F2 0%, #EAE0D5 50%, #F7F5F2 100%);
+            overflow: hidden;
+        }
+
+        /* Animated gradient waves */
+        .garden-background::before,
+        .garden-background::after {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(26, 42, 36, 0.03) 0%, transparent 70%);
+            animation: wave 25s ease-in-out infinite;
+        }
+
+        .garden-background::before {
+            top: -50%;
+            left: -50%;
+            animation-delay: 0s;
+        }
+
+        .garden-background::after {
+            bottom: -50%;
+            right: -50%;
+            animation-delay: -12.5s;
+        }
+
+        @keyframes wave {
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg) scale(1);
+            }
+            33% {
+                transform: translate(30px, -30px) rotate(120deg) scale(1.1);
+            }
+            66% {
+                transform: translate(-20px, 20px) rotate(240deg) scale(0.9);
+            }
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 200;
+        }
+
+        /* Navigation */
+        nav {
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            background: #1a2a24 !important;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Hero Text Animation */
+        .hero-text {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1.5s ease-out 0.5s forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Content Section Fade In */
+        .content-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+        }
+
+        .content-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Button Hover Effects */
+        .btn-primary {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn-primary:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3);
+        }
+
+        /* Rum Bottle Hover Effect */
+        .rum-bottle-image {
+            transition: all 0.4s ease;
+        }
+
+        .rum-bottle-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 0px 25px rgba(212, 175, 55, 0.7);
+        }
+
+        /* Card Hover Effects */
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(26, 42, 36, 0.15);
+        }
+
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Hero Overlay */
+        .hero-overlay {
+            background: linear-gradient(to bottom, rgba(26, 42, 36, 0.6), rgba(26, 42, 36, 0.4));
+        }
+
+        /* Parallax Effect */
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .mobile-menu.active {
+            max-height: 500px;
+        }
+
+        /* Image Overlay Gradient */
+        .img-overlay {
+            position: relative;
+        }
+
+        .img-overlay::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to top, rgba(26, 42, 36, 0.7), transparent);
+        }
+
+        /* Gold Accent Line */
+        .gold-line {
+            width: 60px;
+            height: 2px;
+            background: #D4AF37;
+            margin: 0 auto;
+        }
+    </style>
 </head>
 <body>
-    <!-- Content will be added here -->
+    <!-- Animated Garden Background -->
+    <div class="garden-background" id="gardenBg">
+        <canvas id="particleCanvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></canvas>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed w-full top-0 z-50 transition-all duration-300" style="background: rgba(26, 42, 36, 0.3); backdrop-filter: blur(10px);">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0">
+                    <img src="./assets/image_2.png" alt="Princesa Logo" class="h-12 w-auto">
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#story" class="text-sm font-light text-white hover:text-yellow-400 transition-colors" style="font-family: 'Montserrat', sans-serif;">Our Story</a>
+                    <a href="#menu" class="text-sm font-light text-white hover:text-yellow-400 transition-colors" style="font-family: 'Montserrat', sans-serif;">The Menu</a>
+                    <a href="#rum" class="text-sm font-light text-white hover:text-yellow-400 transition-colors" style="font-family: 'Montserrat', sans-serif;">The Rum Library</a>
+                    <a href="#farm" class="text-sm font-light text-white hover:text-yellow-400 transition-colors" style="font-family: 'Montserrat', sans-serif;">Finca La Zafra</a>
+                    <a href="#events" class="text-sm font-light text-white hover:text-yellow-400 transition-colors" style="font-family: 'Montserrat', sans-serif;">Events</a>
+                    <a href="#contact" class="text-sm font-light text-white hover:text-yellow-400 transition-colors" style="font-family: 'Montserrat', sans-serif;">Contact</a>
+                    <a href="#contact" class="btn-primary px-6 py-2 rounded-full text-sm font-light" style="background: #D4AF37; color: #1a2a24; font-family: 'Montserrat', sans-serif;">Reservations</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden text-white focus:outline-none">
+                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="mobile-menu md:hidden">
+                <div class="px-2 pt-2 pb-3 space-y-1">
+                    <a href="#story" class="block px-3 py-2 text-white hover:text-yellow-400">Our Story</a>
+                    <a href="#menu" class="block px-3 py-2 text-white hover:text-yellow-400">The Menu</a>
+                    <a href="#rum" class="block px-3 py-2 text-white hover:text-yellow-400">The Rum Library</a>
+                    <a href="#farm" class="block px-3 py-2 text-white hover:text-yellow-400">Finca La Zafra</a>
+                    <a href="#events" class="block px-3 py-2 text-white hover:text-yellow-400">Events</a>
+                    <a href="#contact" class="block px-3 py-2 text-white hover:text-yellow-400">Contact</a>
+                    <a href="#contact" class="block px-3 py-2 mt-2 text-center rounded-full" style="background: #D4AF37; color: #1a2a24;">Reservations</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="relative h-screen flex items-center justify-center">
+        <div class="absolute inset-0 img-overlay">
+            <img src="./assets/image_11.jpg" alt="Garden Restaurant" class="w-full h-full object-cover">
+            <div class="hero-overlay absolute inset-0"></div>
+        </div>
+        <div class="relative z-10 text-center px-4 max-w-4xl mx-auto hero-text">
+            <h1 class="text-5xl md:text-7xl text-white mb-6" style="font-family: 'Montserrat', sans-serif; font-weight: 200;">Taste Puerto Rico's History</h1>
+            <p class="text-xl md:text-2xl text-gray-200 mb-10 font-light">An authentic 19th-century culinary journey</p>
+            <a href="#contact" class="btn-primary inline-block px-10 py-4 rounded-full text-lg" style="background: #D4AF37; color: #1a2a24; font-family: 'Montserrat', sans-serif; font-weight: 300;">Reserve Your Table</a>
+        </div>
+    </section>
+
+    <!-- Our Story Section -->
+    <section id="story" class="py-24 px-4 content-section" style="background: #F7F5F2;">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl mb-4" style="color: #1a2a24; font-family: 'Montserrat', sans-serif; font-weight: 200;">Our Story</h2>
+                <div class="gold-line"></div>
+            </div>
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="img-overlay rounded-lg overflow-hidden">
+                    <img src="./assets/image_8.jpg" alt="Historic Interior" class="w-full h-96 object-cover">
+                </div>
+                <div>
+                    <h3 class="text-2xl md:text-3xl mb-6" style="color: #1a2a24; font-family: 'Montserrat', sans-serif; font-weight: 300;">A Journey Through Time</h3>
+                    <p class="text-base md:text-lg mb-4" style="color: #5E6D68; line-height: 1.8;">Nestled in the heart of Old San Juan's historic Paseo de la Princesa, Princesa - Cocina Cultura offers a unique culinary experience that transports you to 19th-century Puerto Rico.</p>
+                    <p class="text-base md:text-lg mb-4" style="color: #5E6D68; line-height: 1.8;">We are the only restaurant crafting dishes from authentic Puerto Rican cookbooks dating from 1859 to 1950. Each recipe tells a story, each flavor captures a moment in our island's rich history.</p>
+                    <p class="text-base md:text-lg" style="color: #5E6D68; line-height: 1.8;">Surrounded by over 20 trees and bonded to a historic wall, our magical garden setting creates an enchanting atmosphere where history and nature intertwine.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Menu Section -->
+    <section id="menu" class="py-24 px-4 content-section" style="background: #EAE0D5;">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl mb-4" style="color: #1a2a24; font-family: 'Montserrat', sans-serif; font-weight: 200;">Elevated Puerto Rican Cuisine</h2>
+                <div class="gold-line"></div>
+                <p class="text-lg mt-6" style="color: #5E6D68;">From our farm to your table</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white rounded-lg overflow-hidden shadow-lg card-hover">
+                    <img src="./assets/image_0.jpg" alt="Traditional Dish" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl mb-3" style="color: #1a2a24; font-family: 'Montserrat', sans-serif; font-weight: 300;">Historic Recipes</h3>
+                        <p class="text-sm" style="color: #5E6D68; line-height: 1.7;">Authentic dishes from 19th-century Puerto Rican cookbooks, prepared with modern techniques and the freshest local ingredients.</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg overflow-hidden shadow-lg card-hover">
+                    <img src="./assets/image_6.jpg" alt="Gourmet Dish" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl mb-3" style="color: #1a2a24; font-family: 'Montserrat', sans-serif; font-weight: 300;">Farm Fresh</h3>
+                        <p class="text-sm" style="color: #5E6D68; line-height: 1.7;">Ingredients sourced from our own agroecological farm, Finca La Zafra, and local farmers ensure peak freshness and flavor.</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg overflow-hidden shadow-lg card-hover">
+                    <img src="./assets/image_10.jpg" alt="Dining Experience" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl mb-3" style="color: #1a2a24; font-family: 'Montserrat', sans-serif; font-weight: 300;">Cultural Journey</h3>
+                        <p class="text-sm" style="color: #5E6D68; line-height: 1.7;">Every dish is a story, every meal an exploration of Puerto Rico's culinary heritage and cultural evolution.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rum Library Section -->
+    <section id="rum" class="py-24 px-4 content-section" style="background: #F7F5F2;">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-4xl md:text-5xl mb-6" style="color: #1a2a24; font-family: 'Montserrat', sans-serif; font-weight: 200;">The Rum Library</h2>
+                    <div class="gold-line" style="margin-left: 0;"></div>
+                    <p class="text-base md:text-lg mt-6 mb-4" style="color: #5E6D68; line-height: 1.8;">Discover one of the most extensive collections of Puerto Rican rums in the world. Our library features rare vintage bottles, artisanal distillations, and contemporary masterpieces.</p>
+                    <p class="text-base md:text-lg mb-6" style="color: #5E6D68; line-height: 1.8;">Each rum tells the story of Puerto Rico's sugar cane heritage, from colonial times to the present day. Our expert mixologists craft cocktails that honor these traditions while pushing the boundaries of modern gastronomy.</p>
+                    <a href="#contact" class="btn-primary inline-block px-8 py-3 rounded-full" style="background: #D4AF37; color: #1a2a24; font-family: 'Montserrat', sans-serif; font-weight: 300;">Explore Our Collection</a>
+                </div>
+                <div class="img-overlay rounded-lg overflow-hidden rum-bottle-image">
+                    <img src="./assets/image_7.jpg" alt="Rum Collection" class="w-full h-96 object-cover">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Finca La Zafra Section -->
+    <section id="farm" class="py-24 px-4 content-section" style="background: #1a2a24;">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl mb-4" style="color: #EAE0D5; font-family: 'Montserrat', sans-serif; font-weight: 200;">Finca La Zafra</h2>
+                <div class="gold-line"></div>
+                <p class="text-lg mt-6" style="color: #EAE0D5;">Our farm, your table</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="img-overlay rounded-lg overflow-hidden order-2 md:order-1">
+                    <img src="./assets/image_11.jpg" alt="Farm" class="w-full h-96 object-cover">
+                </div>
+                <div class="order-1 md:order-2">
+                    <p class="text-base md:text-lg mb-4" style="color: #EAE0D5; line-height: 1.8;">At Princesa, we believe in knowing where our food comes from. That's why we maintain our own agroecological farm, Finca La Zafra, where we grow herbs, vegetables, and fruits using sustainable practices.</p>
+                    <p class="text-base md:text-lg mb-4" style="color: #EAE0D5; line-height: 1.8;">Our commitment to farm-to-table dining means you're always enjoying the freshest ingredients, harvested at peak ripeness and delivered directly to our kitchen.</p>
+                    <p class="text-base md:text-lg" style="color: #EAE0D5; line-height: 1.8;">We also partner with local farmers and producers who share our values, supporting Puerto Rico's agricultural community and ensuring authentic flavors in every dish.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Events Section -->
+    <section id="events" class="py-24 px-4 content-section" style="background: #EAE0D5;">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl mb-4" style="color: #1a2a24; font-family: 'Montserrat', sans-serif; font-weight: 200;">Special Events</h2>
+                <div class="gold-line"></div>
+                <p class="text-lg mt-6" style="color: #5E6D68;">Celebrate life's moments in our magical garden</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h3 class="text-2xl md:text-3xl mb-6" style="color: #1a2a24; font-family: 'Montserrat', sans-serif; font-weight: 300;">An Enchanting Venue</h3>
+                    <p class="text-base md:text-lg mb-4" style="color: #5E6D68; line-height: 1.8;">Our historic garden setting, complete with twinkling lights and lush vegetation, provides the perfect backdrop for weddings, corporate events, and private celebrations.</p>
+                    <p class="text-base md:text-lg mb-6" style="color: #5E6D68; line-height: 1.8;">With live music, exceptional cuisine, and our legendary hospitality, we create unforgettable experiences that honor Puerto Rico's rich cultural heritage.</p>
+                    <a href="mailto:princesapr@zaprici.com" class="btn-primary inline-block px-8 py-3 rounded-full" style="background: #D4AF37; color: #1a2a24; font-family: 'Montserrat', sans-serif; font-weight: 300;">Plan Your Event</a>
+                </div>
+                <div class="img-overlay rounded-lg overflow-hidden">
+                    <img src="./assets/image_9.jpg" alt="Event Space" class="w-full h-96 object-cover">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 px-4 content-section" style="background: #F7F5F2;">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl mb-4" style="color: #1a2a24; font-family: 'Montserrat', sans-serif; font-weight: 200;">Visit Us</h2>
+                <div class="gold-line"></div>
+            </div>
+            <div class="grid md:grid-cols-2 gap-12">
+                <div>
+                    <h3 class="text-xl mb-4" style="color: #1a2a24; font-family: 'Montserrat', sans-serif; font-weight: 300;">Location</h3>
+                    <p class="text-base mb-6" style="color: #5E6D68; line-height: 1.8;">Paseo de la Princesa<br>Old San Juan, PR 00901</p>
+
+                    <h3 class="text-xl mb-4 mt-8" style="color: #1a2a24; font-family: 'Montserrat', sans-serif; font-weight: 300;">Contact</h3>
+                    <p class="text-base mb-2" style="color: #5E6D68;">Phone: <a href="tel:787-723-7878" class="hover:text-yellow-600 transition-colors">787-723-7878</a></p>
+                    <p class="text-base mb-6" style="color: #5E6D68;">Email: <a href="mailto:princesapr@zaprici.com" class="hover:text-yellow-600 transition-colors">princesapr@zaprici.com</a></p>
+
+                    <h3 class="text-xl mb-4 mt-8" style="color: #1a2a24; font-family: 'Montserrat', sans-serif; font-weight: 300;">Hours</h3>
+                    <p class="text-base mb-2" style="color: #5E6D68;">Monday - Thursday: 5:00 PM - 11:00 PM</p>
+                    <p class="text-base mb-2" style="color: #5E6D68;">Friday - Saturday: 12:00 PM - 12:00 AM</p>
+                    <p class="text-base" style="color: #5E6D68;">Sunday: 12:00 PM - 10:00 PM</p>
+                </div>
+                <div class="bg-white p-8 rounded-lg shadow-lg">
+                    <h3 class="text-xl mb-6" style="color: #1a2a24; font-family: 'Montserrat', sans-serif; font-weight: 300;">Make a Reservation</h3>
+                    <form>
+                        <div class="mb-4">
+                            <label class="block text-sm mb-2" style="color: #5E6D68;">Name</label>
+                            <input type="text" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-yellow-600" style="border-color: #EAE0D5;">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-sm mb-2" style="color: #5E6D68;">Email</label>
+                            <input type="email" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-yellow-600" style="border-color: #EAE0D5;">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-sm mb-2" style="color: #5E6D68;">Phone</label>
+                            <input type="tel" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-yellow-600" style="border-color: #EAE0D5;">
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <label class="block text-sm mb-2" style="color: #5E6D68;">Date</label>
+                                <input type="date" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-yellow-600" style="border-color: #EAE0D5;">
+                            </div>
+                            <div>
+                                <label class="block text-sm mb-2" style="color: #5E6D68;">Guests</label>
+                                <select class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-yellow-600" style="border-color: #EAE0D5;">
+                                    <option>2</option>
+                                    <option>4</option>
+                                    <option>6</option>
+                                    <option>8+</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-6">
+                            <label class="block text-sm mb-2" style="color: #5E6D68;">Special Requests</label>
+                            <textarea rows="3" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-yellow-600" style="border-color: #EAE0D5;"></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary w-full py-3 rounded-full" style="background: #D4AF37; color: #1a2a24; font-family: 'Montserrat', sans-serif; font-weight: 300;">Request Reservation</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 px-4" style="background: #1a2a24;">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid md:grid-cols-3 gap-8 mb-8">
+                <div>
+                    <img src="./assets/image_2.png" alt="Princesa Logo" class="h-12 mb-4">
+                    <p class="text-sm" style="color: #EAE0D5; line-height: 1.6;">Experience the magic of 19th-century Puerto Rican cuisine in our enchanted garden setting.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg mb-4" style="color: #EAE0D5; font-family: 'Montserrat', sans-serif; font-weight: 300;">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#story" class="text-sm hover:text-yellow-400 transition-colors" style="color: #EAE0D5;">Our Story</a></li>
+                        <li><a href="#menu" class="text-sm hover:text-yellow-400 transition-colors" style="color: #EAE0D5;">The Menu</a></li>
+                        <li><a href="#rum" class="text-sm hover:text-yellow-400 transition-colors" style="color: #EAE0D5;">The Rum Library</a></li>
+                        <li><a href="#events" class="text-sm hover:text-yellow-400 transition-colors" style="color: #EAE0D5;">Events</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg mb-4" style="color: #EAE0D5; font-family: 'Montserrat', sans-serif; font-weight: 300;">Connect</h4>
+                    <p class="text-sm mb-2" style="color: #EAE0D5;">787-723-7878</p>
+                    <p class="text-sm mb-4" style="color: #EAE0D5;">princesapr@zaprici.com</p>
+                    <div class="flex space-x-4">
+                        <a href="https://www.facebook.com/princesacocinacultura/" target="_blank" rel="noopener" class="hover:opacity-75 transition-opacity">
+                            <img src="./assets/image_5.png" alt="Facebook" class="h-8 w-8">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t pt-8 text-center" style="border-color: #5E6D68;">
+                <p class="text-sm" style="color: #EAE0D5;">&copy; 2025 Princesa - Cocina Cultura. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+            });
+        });
+
+        // Navbar Scroll Effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Scroll Animation Observer
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Canvas Particle System - Tropical Leaves & Vintage Paper
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        class Particle {
+            constructor(type) {
+                this.type = type; // 'leaf' or 'paper'
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 8 + 4;
+                this.speedX = Math.random() * 0.8 - 0.4;
+                this.speedY = Math.random() * 0.8 - 0.4;
+                this.opacity = Math.random() * 0.25 + 0.15;
+                this.rotation = Math.random() * Math.PI * 2;
+                this.rotationSpeed = (Math.random() - 0.5) * 0.015;
+
+                if (this.type === 'leaf') {
+                    // Tropical green leaf colors
+                    this.color = ['#2d4a37', '#3a5a42', '#1a2a24', '#4a6a4f'][Math.floor(Math.random() * 4)];
+                } else {
+                    // Vintage paper colors
+                    this.color = ['#D4AF37', '#C9A961', '#B89968'][Math.floor(Math.random() * 3)];
+                }
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.rotation += this.rotationSpeed;
+
+                // Bounce off edges
+                if (this.x < -50 || this.x > canvas.width + 50) this.speedX *= -1;
+                if (this.y < -50 || this.y > canvas.height + 50) this.speedY *= -1;
+
+                // Add gentle wave motion
+                this.x += Math.sin(Date.now() * 0.0008 + this.y * 0.005) * 0.4;
+                this.y += Math.cos(Date.now() * 0.0008 + this.x * 0.005) * 0.4;
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.rotation);
+                ctx.globalAlpha = this.opacity;
+
+                if (this.type === 'leaf') {
+                    // Draw tropical leaf shape
+                    ctx.beginPath();
+                    ctx.moveTo(0, -this.size);
+                    ctx.bezierCurveTo(
+                        this.size * 0.6, -this.size * 0.8,
+                        this.size * 0.8, -this.size * 0.3,
+                        this.size * 0.5, 0
+                    );
+                    ctx.bezierCurveTo(
+                        this.size * 0.8, this.size * 0.3,
+                        this.size * 0.6, this.size * 0.8,
+                        0, this.size
+                    );
+                    ctx.bezierCurveTo(
+                        -this.size * 0.6, this.size * 0.8,
+                        -this.size * 0.8, this.size * 0.3,
+                        -this.size * 0.5, 0
+                    );
+                    ctx.bezierCurveTo(
+                        -this.size * 0.8, -this.size * 0.3,
+                        -this.size * 0.6, -this.size * 0.8,
+                        0, -this.size
+                    );
+                    ctx.closePath();
+                    ctx.fillStyle = this.color;
+                    ctx.fill();
+                } else {
+                    // Draw vintage paper rectangle
+                    ctx.fillStyle = this.color;
+                    ctx.fillRect(-this.size * 0.7, -this.size * 0.5, this.size * 1.4, this.size);
+
+                    // Add subtle texture lines
+                    ctx.strokeStyle = this.color;
+                    ctx.globalAlpha = this.opacity * 0.5;
+                    ctx.lineWidth = 0.5;
+                    for (let i = -this.size * 0.5; i < this.size * 0.5; i += 2) {
+                        ctx.beginPath();
+                        ctx.moveTo(-this.size * 0.6, i);
+                        ctx.lineTo(this.size * 0.6, i);
+                        ctx.stroke();
+                    }
+                }
+
+                ctx.restore();
+            }
+        }
+
+        const particles = [];
+
+        // Create 50 leaf particles
+        for (let i = 0; i < 50; i++) {
+            particles.push(new Particle('leaf'));
+        }
+
+        // Create 25 paper particles
+        for (let i = 0; i < 25; i++) {
+            particles.push(new Particle('paper'));
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+
+            requestAnimationFrame(animateParticles);
+        }
+
+        animateParticles();
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
